@@ -1,25 +1,65 @@
-import styles from './Header.module.scss';
-import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSpinner, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import Tippy from '@tippyjs/react/headless';
+import 'tippy.js/dist/tippy.css';
+import { useEffect, useState } from 'react';
+
+import styles from './Header.module.scss';
+import images from '~/assets/images';
+import { Wrapper as PopperWrapper } from '~/components/Popper';
+import AccountItem from '~/components/AccountItem';
+import Button from '~/components/Button';
 
 function Header() {
+    const [searchResult,setSearchResult] = useState([]);
+    useEffect(() => {
+        setTimeout(() => {
+            setSearchResult([]);         
+        },0);
+    },[]);
     return <header className={styles.wrapper}>
                 <div className={styles.inner}>
                     <div>
                         <img src={images.logo.default} alt='Tiktok'></img>
                     </div>
-                    <div className={styles.search}>
-                        <input placeholder='Search accounts and videos' spellCheck={false}></input>
-                        <button className={styles.clear}>
-                            <FontAwesomeIcon icon={faCircleXmark}></FontAwesomeIcon>
-                        </button>
-                        <FontAwesomeIcon icon={faSpinner} className={styles.loading}></FontAwesomeIcon>
-                        <button className={styles.searchButton}>
-                        <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
-                        </button>
+                    <Tippy 
+                            interactive
+                            visible = {searchResult.length > 0}
+                            render={attrs => (
+                                    <div className={styles.searchResult} tabIndex="-1" {...attrs}>
+                                        <PopperWrapper>
+                                            <h4 className={styles.searchTitle}>
+                                                Account
+                                            </h4>
+                                            <AccountItem></AccountItem>
+                                            <AccountItem></AccountItem>
+                                            <AccountItem></AccountItem>
+                                            <AccountItem></AccountItem>
+
+                                        </PopperWrapper>
+                                    </div>
+                            )}
+                        >
+                        <div className={styles.search}>
+                            <input placeholder='Search accounts and videos' spellCheck={false}></input>
+                            <button className={styles.clear}>
+                                <FontAwesomeIcon icon={faCircleXmark}></FontAwesomeIcon>
+                            </button>
+                            <FontAwesomeIcon icon={faSpinner} className={styles.loading}></FontAwesomeIcon>
+                            
+                                <button className={styles.searchButton}>
+                                    <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
+                                </button>
+                        </div>
+                    </Tippy>
+                    <div className={styles.actions}>
+                        <Button text>
+                            Upload
+                        </Button>
+                        <Button primary >
+                            Login
+                        </Button>
                     </div>
-                    <div className={styles.actions}></div>
                 </div>
             </header>;
 }
