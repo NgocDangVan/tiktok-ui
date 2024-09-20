@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faSpinner, faMagnifyingGlass, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard } from '@fortawesome/free-solid-svg-icons';
-import Tippy from '@tippyjs/react/headless';
+import { faCircleXmark, faSpinner, faMagnifyingGlass, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faCloudUpload, faUser, faCoins, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import Tippy from '@tippyjs/react';
+import HeadlessTippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 import { useEffect, useState } from 'react';
 
@@ -44,6 +45,8 @@ const MENU_ITEMS = [
 
 function Header() {
     const [searchResult,setSearchResult] = useState([]);
+    const currentUser = true;
+
     useEffect(() => {
         setTimeout(() => {
             setSearchResult([]);         
@@ -61,12 +64,37 @@ function Header() {
         }
     };
 
+    const userMenu = [
+        {
+            icon: <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>,
+            title: 'View profile',
+            to: '/@hoaa'
+        },
+        {
+            icon: <FontAwesomeIcon icon={faCoins}></FontAwesomeIcon>,
+            title: 'Get coins',
+            to: '/coin'
+        },
+        {
+            icon: <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>,
+            title: 'Settings',
+            to: '/settings'
+        },
+        ...MENU_ITEMS,
+        {
+            icon: <FontAwesomeIcon icon={faSignOut}></FontAwesomeIcon>,
+            title: 'Log out',
+            to: '/logout',
+            separate: true,
+        },
+    ]
+
     return <header className={styles.wrapper}>
                 <div className={styles.inner}>
                     <div>
                         <img src={images.logo.default} alt='Tiktok'></img>
                     </div>
-                    <Tippy 
+                    <HeadlessTippy 
                             interactive
                             visible = {searchResult.length > 0}
                             render={attrs => (
@@ -95,25 +123,46 @@ function Header() {
                                     <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
                                 </button>
                         </div>
-                    </Tippy>
-                    <div className={styles.actions}>
-                        <Button text>
-                            Upload
-                        </Button>
-                        <Button primary >
-                            Login
-                        </Button>
+                    </HeadlessTippy>
 
+                    <div className={styles.actions}>
+                    {currentUser ? (
+                        <>
+                            <Tippy
+                                delay={[0,200]}
+                                content="Upload video"
+                                placement="bottom"
+                            >
+                                <button className={styles.actionBtn}>
+                                    <FontAwesomeIcon icon={faCloudUpload}></FontAwesomeIcon>
+                                </button>
+                            </Tippy>
+                        </>
+                    ) : (
+                            <>
+                                <Button text>
+                                    Upload
+                                </Button>
+                                <Button primary >
+                                    Login
+                                </Button>
+                            </> 
+                        )}
                         <Menu
-                            items = {MENU_ITEMS}    
+                            items = {currentUser ? userMenu : MENU_ITEMS}    
                             onchange = {handleMenuChange}
                         >
-                            <Button className={styles.moreButton}>
-                                <FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>
-                            </Button>
+                            {currentUser ? (
+                                <img className={styles.userAvartar} src='https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/1d896b842df46e1f6fd266babebb4d9b.jpeg?lk3s=a5d48078&nonce=54416&refresh_token=2b5e1609e8fb2d968c2b84e8f3baa796&x-expires=1726902000&x-signature=lpWV24zigjwWH6jBBy%2FIwBQK4FE%3D&shp=a5d48078&shcp=b59d6b55' alt='Nguyễn Văn A'></img>
+                            ) : (
+                                <Button className={styles.moreButton}>
+                                    <FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>
+                                </Button>
+                            )}
+                            
                         </Menu>
-                        
-                    </div>
+                        </div>
+                    
                 </div>
             </header>;
 }
