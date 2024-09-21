@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faSpinner, faMagnifyingGlass, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faCloudUpload, faUser, faCoins, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faSpinner, faMagnifyingGlass, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faUser, faCoins, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
 import HeadlessTippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
@@ -11,6 +11,8 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
+import { UploadIcon } from '~/components/Icons';
+import Image from '~/components/Image';
 
 const MENU_ITEMS = [
     {
@@ -134,7 +136,7 @@ function Header() {
                                 placement="bottom"
                             >
                                 <button className={styles.actionBtn}>
-                                    <FontAwesomeIcon icon={faCloudUpload}></FontAwesomeIcon>
+                                    <UploadIcon></UploadIcon>
                                 </button>
                             </Tippy>
                         </>
@@ -153,7 +155,13 @@ function Header() {
                             onchange = {handleMenuChange}
                         >
                             {currentUser ? (
-                                <img className={styles.userAvartar} src='https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/1d896b842df46e1f6fd266babebb4d9b.jpeg?lk3s=a5d48078&nonce=54416&refresh_token=2b5e1609e8fb2d968c2b84e8f3baa796&x-expires=1726902000&x-signature=lpWV24zigjwWH6jBBy%2FIwBQK4FE%3D&shp=a5d48078&shcp=b59d6b55' alt='Nguyễn Văn A'></img>
+                                // Vào trang placeholder.imageonline để tạo ảnh, tiny png để giảm dung lượng ảnh
+                                <Image 
+                                    className={styles.userAvartar} 
+                                    src='https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/1d896b842df46e1f6fd266babebb4d9b.jpeg?lk3s=a5d48078&nonce=54416&refresh_token=2b5e1609e8fb2d968c2b84e8f3baa796&x-expires=1726902000&x-signature=lpWV24zigjwWH6jBBy%2FIwBQK4FE%3D&shp=a5d48078&shcp=b59d6b55' 
+                                    alt='Nguyễn Văn A'
+                                    //fallback="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/623d4b2d95cec.png"
+                                ></Image>
                             ) : (
                                 <Button className={styles.moreButton}>
                                     <FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>
