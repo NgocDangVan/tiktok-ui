@@ -7,6 +7,8 @@ import styles from './Search.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useDebounce} from '~/hooks';
 
+import * as searchService from '~/apiServices/searchService';
+
 function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult,setSearchResult] = useState([]);
@@ -26,16 +28,14 @@ function Search() {
 
         setLoading(true);
 
-        // encodeURIComponent: hàm mã hóa ký tự đặc biệt khi nhập ô search
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
-            .then(res => res.json())
-            .then(res => {
-                setSearchResult(res.data);
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
+        const fetchApi = async () => {
+            setLoading(true);
+            const result = await searchService.search(debounced);
+            setSearchResult(result);
+            setLoading(false);
+        }
+
+        fetchApi();
     },[debounced]);
 
     const handleClear = () => {
