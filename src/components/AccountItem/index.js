@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 import styles from './AccountItem.module.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +24,11 @@ function AccountItem( {data} ) {
             </div>
         </Link>
     );
+}
+
+// Hàm cảnh báo nếu dữ liệu đầu vào (data) của AccountItem không đúng dữ liệu
+AccountItem.propTypes = {
+    data: PropTypes.object.isRequired,
 }
 
 export default AccountItem;
