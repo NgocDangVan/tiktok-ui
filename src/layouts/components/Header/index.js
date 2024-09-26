@@ -11,7 +11,7 @@ import { UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search';
 import { Link } from 'react-router-dom';
-import routesConfig from '~/config/routes';
+import config from '~/config';
 
 const MENU_ITEMS = [
     {
@@ -149,7 +149,7 @@ function Header() {
     return <header className={styles.wrapper}>
                 <div className={styles.inner}>
                     <div>
-                        <Link to={routesConfig.home} className={styles.logoLink}>
+                        <Link to={config.routes.home} className={styles.logoLink}>
                             <img src={images.logo.default} alt='Tiktok'></img>
                         </Link>
                     </div>

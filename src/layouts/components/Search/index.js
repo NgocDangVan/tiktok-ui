@@ -7,7 +7,7 @@ import styles from './Search.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useDebounce} from '~/hooks';
 
-import * as searchService from '~/apiServices/searchService';
+import * as searchService from '~/services/searchService';
 
 function Search() {
     const [searchValue, setSearchValue] = useState('');
