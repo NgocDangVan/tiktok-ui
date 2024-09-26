@@ -22,9 +22,10 @@
         input {
             flex: 1;
             height: 100%;
+            padding: 12px 0px;
+            padding-right: 40px;
             color: var(--black);
             font-size: 1.6rem;
-            padding: 12px 0px;
             caret-color: var(--primary);
             background-color: transparent;
             font-family: var(--font-family);

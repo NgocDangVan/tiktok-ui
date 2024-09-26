@@ -108,8 +108,6 @@ function Header() {
     
     const currentUser = true;
 
-    
-
     // Handle logic
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
